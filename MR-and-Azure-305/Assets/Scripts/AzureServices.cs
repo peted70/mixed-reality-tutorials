@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.File;
 using System.IO;
@@ -25,13 +23,13 @@ public class AzureServices : MonoBehaviour
     /// Connection String here.
     /// </summary>
 
-    private string azureFunctionEndpoint = "https://mixedreality305.azurewebsites.net/api/HttpTriggerCSharp1?code=bB9OxeJ8iMNyHO70rHSyRTZ/hYh8B2Rj6xk9aO7Vd9CIabap54MEHA==";
+    private readonly string azureFunctionEndpoint = "https://mixedreality305.azurewebsites.net/api/HttpTriggerCSharp1?code=bB9OxeJ8iMNyHO70rHSyRTZ/hYh8B2Rj6xk9aO7Vd9CIabap54MEHA==";
 
     /// <summary>
     /// Holds the Storage Connection String - Insert your Azure Storage
     /// Connection String here.
     /// </summary>
-    private string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=mixedrealityazure305;AccountKey=NYpVZGVUGAwxLDrF7sLMEnh0ayZr56lIF6DpzYIZgAAbCnWOPa/NvLOPMOiQO2n2fM5jir9a07yHIm6lWGdbMg==;EndpointSuffix=core.windows.net";
+    private readonly string storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=mixedrealityazure305;AccountKey=NYpVZGVUGAwxLDrF7sLMEnh0ayZr56lIF6DpzYIZgAAbCnWOPa/NvLOPMOiQO2n2fM5jir9a07yHIm6lWGdbMg==;EndpointSuffix=core.windows.net";
 
     /// <summary>
     /// Name of the Cloud Share - Hosts directories.
