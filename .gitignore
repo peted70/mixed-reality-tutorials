@@ -12,6 +12,7 @@ Assets/MixedRealityToolkit/
 *.user
 *.userosscache
 *.sln.docstates
+*.lic
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

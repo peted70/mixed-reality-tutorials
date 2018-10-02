@@ -14,6 +14,14 @@ public class LuisManager : MonoBehaviour
 
     private void Awake()
     {
+        string path = "Assets/Resources/luis.";
+
+        //Read the text from directly from the test.txt file
+        using (StreamReader reader = new StreamReader(path))
+        {
+            luisEndpoint = reader.ReadToEnd();
+        }
+
         // allows this class instance to behave like a singleton
         instance = this;
     }
