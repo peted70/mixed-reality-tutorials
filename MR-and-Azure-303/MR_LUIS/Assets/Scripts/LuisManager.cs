@@ -10,11 +10,11 @@ public class LuisManager : MonoBehaviour
     public static LuisManager instance;
 
     //Substitute the value of luis Endpoint with your own End Point
-    string luisEndpoint = "https://westus.api.cognitive... add your endpoint from the Luis Portal";
+    string luisEndpoint;
 
     private void Awake()
     {
-        string path = "Assets/Resources/luis.";
+        string path = "Assets/Resources/luis.lic";
 
         //Read the text from directly from the test.txt file
         using (StreamReader reader = new StreamReader(path))
