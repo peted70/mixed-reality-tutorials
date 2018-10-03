@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Experimental.XR;
-using UnityEngine.UI;
-using UnityEngine.XR;
-using UnityEngine.XR.WSA.Input;
+﻿using UnityEngine;
 
 public class Gaze : MonoBehaviour
 {

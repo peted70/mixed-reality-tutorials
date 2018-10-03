@@ -29,7 +29,7 @@ public class LuisManager : MonoBehaviour
     /// <summary>
     /// Call LUIS to submit a dictation result.
     /// </summary>
-    public IEnumerator SubmitRequestToLuis(string dictationResult)
+    public IEnumerator SubmitRequestToLuis(string dictationResult, Action done)
     {
         string queryString = string.Concat(Uri.EscapeDataString(dictationResult));
 
@@ -56,18 +56,9 @@ public class LuisManager : MonoBehaviour
                 }
             }
 
+            done();
             yield return null;
         }
-    }
-
-    public static Stream GenerateStreamFromString(string receivedString)
-    {
-        MemoryStream stream = new MemoryStream();
-        StreamWriter writer = new StreamWriter(stream);
-        writer.Write(receivedString);
-        writer.Flush();
-        stream.Position = 0;
-        return stream;
     }
 
     private void AnalyseResponseElements(AnalysedQuery aQuery)
@@ -124,7 +115,7 @@ public class LuisManager : MonoBehaviour
         }
     }
 
-    [System.Serializable] //this class represents the LUIS response
+    [Serializable] //this class represents the LUIS response
     public class AnalysedQuery
     {
         public TopScoringIntentData topScoringIntent;
@@ -134,7 +125,7 @@ public class LuisManager : MonoBehaviour
 
     // This class contains the Intent LUIS determines 
     // to be the most likely
-    [System.Serializable]
+    [Serializable]
     public class TopScoringIntentData
     {
         public string intent;
@@ -142,7 +133,7 @@ public class LuisManager : MonoBehaviour
     }
 
     // This class contains data for an Entity
-    [System.Serializable]
+    [Serializable]
     public class EntityData
     {
         public string entity;
