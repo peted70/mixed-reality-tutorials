@@ -31,37 +31,29 @@ public class LuisManager : MonoBehaviour
     /// </summary>
     public IEnumerator SubmitRequestToLuis(string dictationResult)
     {
-        WWWForm webForm = new WWWForm();
-
-        string queryString;
-
-        queryString = string.Concat(Uri.EscapeDataString(dictationResult));
+        string queryString = string.Concat(Uri.EscapeDataString(dictationResult));
 
         using (UnityWebRequest unityWebRequest = UnityWebRequest.Get(luisEndpoint + queryString))
         {
-            unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
-
             yield return unityWebRequest.SendWebRequest();
 
-            long responseCode = unityWebRequest.responseCode;
-
-            try
+            if (unityWebRequest.isNetworkError || unityWebRequest.isHttpError)
             {
-                using (Stream stream = GenerateStreamFromString(unityWebRequest.downloadHandler.text))
+                Debug.Log(unityWebRequest.error);
+            }
+            else
+            {
+                try
                 {
-                    StreamReader reader = new StreamReader(stream);
-
-                    AnalysedQuery analysedQuery = new AnalysedQuery();
-
-                    analysedQuery = JsonUtility.FromJson<AnalysedQuery>(unityWebRequest.downloadHandler.text);
+                    AnalysedQuery analysedQuery = JsonUtility.FromJson<AnalysedQuery>(unityWebRequest.downloadHandler.text);
 
                     //analyse the elements of the response 
                     AnalyseResponseElements(analysedQuery);
                 }
-            }
-            catch (Exception exception)
-            {
-                Debug.Log("Luis Request Exception Message: " + exception.Message);
+                catch (Exception exception)
+                {
+                    Debug.Log("Luis Request Exception Message: " + exception.Message);
+                }
             }
 
             yield return null;
@@ -80,8 +72,6 @@ public class LuisManager : MonoBehaviour
 
     private void AnalyseResponseElements(AnalysedQuery aQuery)
     {
-        string topIntent = aQuery.topScoringIntent.intent;
-
         // Create a dictionary of entities associated with their type
         Dictionary<string, string> entityDic = new Dictionary<string, string>();
 

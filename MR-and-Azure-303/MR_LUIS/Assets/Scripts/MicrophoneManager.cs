@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Windows.Speech;
 
 public class MicrophoneManager : MonoBehaviour
 {
     public static MicrophoneManager instance; //help to access instance of this object
-    private int frequency = 44100;      //recording frequency of mic
-    private AudioSource audioSource;        //AudioSource component, provides access to mic
     private DictationRecognizer dictationRecognizer;  //Component converting speech to text
     public TextMesh dictationText; //a UI object used to debug dictation result
 
@@ -21,11 +17,7 @@ public class MicrophoneManager : MonoBehaviour
     {
         if (Microphone.devices.Length > 0)
         {
-            // Once the scene starts, begin to capture the audio
-            audioSource = GetComponent<AudioSource>();
-
             StartCapturingAudio();
-
             Debug.Log("Mic Detected");
         }
     }
@@ -36,7 +28,11 @@ public class MicrophoneManager : MonoBehaviour
     /// </summary>
     public void StartCapturingAudio()
     {
-        dictationRecognizer = new DictationRecognizer();
+        dictationRecognizer = new DictationRecognizer
+        {
+            InitialSilenceTimeoutSeconds = 20,
+            AutoSilenceTimeoutSeconds = 5
+        };
         dictationRecognizer.DictationResult += DictationRecognizer_DictationResult;
         dictationRecognizer.DictationError += DictationRecognizer_DictationError;
         dictationRecognizer.Start();
